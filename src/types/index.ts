@@ -23,6 +23,7 @@ export enum ComponentType {
   Countdown = 5,
   HTML = 6,
   Holiday = 7,
+  News = 8,
 }
 
 export enum ActionType {
@@ -31,10 +32,84 @@ export enum ActionType {
   Delete = 3,
 }
 
-export interface IComponentProps {
+export enum NewsType {
+  Weibo = 1,
+  V2ex = 2,
+  Douyin = 3,
+  Bilibili = 4,
+  Juejin = 5,
+  Baidu = 6,
+  GitHub = 7,
+  Pojie52 = 8,
+  Xiaohongshu = 9,
+  Toutiao = 10,
+  Douban = 11,
+}
+
+export interface INewsProps {
+  types: NewsType[]
+  count: number
+  bgColor: string
+}
+
+export interface ICalendarProps {
+  topColor: string
+  bgColor: string
+}
+
+export interface IOffWorkProps {
+  workTitle: string
+  restTitle: string
+  startDate: number
+  date: number | string
+}
+
+export interface IImageProps {
+  url: string
+  go: string
+  text: string
+}
+
+export interface ICountdownProps {
+  topColor: string
+  bgColor: string
+  url: string
+  title: string
+  dateColor: string
+  dayColor: string
+  date: string
+}
+
+export interface IRuntimeProps {
+  title: string
+}
+
+export interface IHtmlProps {
+  html: string
+  width: number
+  bgColor: string
+}
+
+export interface IHolidayProps {
+  items: any[]
+}
+
+export interface IComponentItemProps
+  extends Partial<Omit<INewsProps, 'bgColor'>>,
+    Partial<ICalendarProps>,
+    Partial<IOffWorkProps>,
+    Partial<IImageProps>,
+    Partial<Omit<ICountdownProps, 'date'>>,
+    Partial<IRuntimeProps>,
+    Partial<Omit<IHtmlProps, 'bgColor'>> {
   id: number
   type: number
   [key: string]: any
+}
+
+export interface IComponentProps {
+  zoom: number
+  components: IComponentItemProps[]
 }
 
 export type ICardType =
@@ -44,6 +119,7 @@ export type ICardType =
   | 'retro'
   | 'original'
   | 'poster'
+  | 'icon'
 
 type OverType = 'overflow' | 'ellipsis'
 
@@ -213,7 +289,7 @@ export interface ISettings {
   loadingCode: string
   openSearch: boolean
   gitHubCDN: string
-  components: IComponentProps[]
+  components: IComponentItemProps[]
 
   runtime: number
 

@@ -74,7 +74,7 @@ httpInstance.interceptors.response.use(
       title: 'Error：' + status,
       content: errorMsg,
       config: {
-        nzDuration: 20000,
+        nzDuration: document.hidden ? 0 : 5000,
       },
     })
     stopLoad()
@@ -111,7 +111,9 @@ httpNavInstance.interceptors.request.use(
       conf.headers['Authorization'] = data.code
     }
     conf.data = getDefaultRequestData(conf.data)
-    startLoad()
+    if (conf.data['showLoading'] !== false) {
+      startLoad()
+    }
 
     return conf
   },
@@ -147,7 +149,7 @@ httpNavInstance.interceptors.response.use(
         title: 'Error：' + status,
         content: errorMsg,
         config: {
-          nzDuration: 20000,
+          nzDuration: document.hidden ? 0 : 5000,
         },
       })
     }
